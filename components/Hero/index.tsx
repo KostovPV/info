@@ -38,283 +38,85 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        {/* <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
+        <div className="absolute right-0 top-28 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"
             height="556"
-            viewBox="0 0 450 556"
+            viewBox="0 0 512 556"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="text-sky-400/80"   /* inherits Tailwind colour; adjust as needed */
           >
-            <circle
-              cx="277"
-              cy="63"
-              r="225"
-              fill="url(#paint0_linear_25:217)"
-            />
-            <circle
-              cx="17.9997"
-              cy="182"
-              r="18"
-              fill="url(#paint1_radial_25:217)"
-            />
-            <circle
-              cx="76.9997"
-              cy="288"
-              r="34"
-              fill="url(#paint2_radial_25:217)"
-            />
-            <circle
-              cx="325.486"
-              cy="302.87"
-              r="180"
-              transform="rotate(-37.6852 325.486 302.87)"
-              fill="url(#paint3_linear_25:217)"
-            />
-            <circle
-              opacity="0.8"
-              cx="184.521"
-              cy="315.521"
-              r="132.862"
-              transform="rotate(114.874 184.521 315.521)"
-              stroke="url(#paint4_linear_25:217)"
-            />
-            <circle
-              opacity="0.8"
-              cx="356"
-              cy="290"
-              r="179.5"
-              transform="rotate(-30 356 290)"
-              stroke="url(#paint5_linear_25:217)"
-            />
-            <circle
-              opacity="0.8"
-              cx="191.659"
-              cy="302.659"
-              r="133.362"
-              transform="rotate(133.319 191.659 302.659)"
-              fill="url(#paint6_linear_25:217)"
-            />
-            <defs>
-              <linearGradient
-                id="paint0_linear_25:217"
-                x1="-54.5003"
-                y1="-178"
-                x2="222"
-                y2="288"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" />
-                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
-              </linearGradient>
-              <radialGradient
-                id="paint1_radial_25:217"
-                cx="0"
-                cy="0"
-                r="1"
-                gradientUnits="userSpaceOnUse"
-                gradientTransform="translate(17.9997 182) rotate(90) scale(18)"
-              >
-                <stop offset="0.145833" stopColor="#4A6CF7" stopOpacity="0" />
-                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0.08" />
-              </radialGradient>
-              <radialGradient
-                id="paint2_radial_25:217"
-                cx="0"
-                cy="0"
-                r="1"
-                gradientUnits="userSpaceOnUse"
-                gradientTransform="translate(76.9997 288) rotate(90) scale(34)"
-              >
-                <stop offset="0.145833" stopColor="#4A6CF7" stopOpacity="0" />
-                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0.08" />
-              </radialGradient>
-              <linearGradient
-                id="paint3_linear_25:217"
-                x1="226.775"
-                y1="-66.1548"
-                x2="292.157"
-                y2="351.421"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" />
-                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient
-                id="paint4_linear_25:217"
-                x1="184.521"
-                y1="182.159"
-                x2="184.521"
-                y2="448.882"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" />
-                <stop offset="1" stopColor="white" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient
-                id="paint5_linear_25:217"
-                x1="356"
-                y1="110"
-                x2="356"
-                y2="470"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" />
-                <stop offset="1" stopColor="white" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient
-                id="paint6_linear_25:217"
-                x1="118.524"
-                y1="29.2497"
-                x2="166.965"
-                y2="338.63"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" />
-                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
-              </linearGradient>
-            </defs>
+            {/* ------- outer guide ring ------- */}
+            <circle cx="256" cy="278" r="245" stroke="currentColor" stroke-opacity=".15" />
+
+            {/* ------- dotted ring (64 ticks) ------- */}
+            <g stroke="currentColor" stroke-opacity=".35" stroke-width="2">
+              {Array.from({ length: 64 }).map((_, i) => {
+                const a = (i / 64) * 2 * Math.PI;
+                const r1 = 213,
+                  r2 = 223;
+                const x1 = 256 + r1 * Math.cos(a);
+                const y1 = 278 + r1 * Math.sin(a);
+                const x2 = 256 + r2 * Math.cos(a);
+                const y2 = 278 + r2 * Math.sin(a);
+                return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />;
+              })}
+            </g>
+
+            {/* ------- inner ring ------- */}
+            <circle cx="256" cy="278" r="154" stroke="currentColor" stroke-opacity=".35" stroke-width="2" />
+
+            {/* ------- eight-point star ------- */}
+            <g fill="currentColor">
+              {Array.from({ length: 8 }).map((_, i) => {
+                const angle = (i * 45 * Math.PI) / 180;
+                const isMajor = i % 2 === 0;
+                const len = isMajor ? 195 : 145;
+                const inner = 40;
+                const tipX = 256 + len * Math.cos(angle);
+                const tipY = 278 + len * Math.sin(angle);
+                const base1X = 256 + inner * Math.cos(angle + Math.PI / 16);
+                const base1Y = 278 + inner * Math.sin(angle + Math.PI / 16);
+                const base2X = 256 + inner * Math.cos(angle - Math.PI / 16);
+                const base2Y = 278 + inner * Math.sin(angle - Math.PI / 16);
+
+                return (
+                  <polygon
+                    key={i}
+                    points={`${tipX},${tipY} ${base1X},${base1Y} 256,278 ${base2X},${base2Y}`}
+                    opacity={isMajor ? 0.9 : 0.6}
+                  />
+                );
+              })}
+            </g>
+
+            {/* ------- centre + thin rim ------- */}
+            <circle cx="256" cy="278" r="38" fill="currentColor" fill-opacity=".85" />
+            <circle cx="256" cy="278" r="58" stroke="currentColor" stroke-opacity=".35" stroke-width="2" />
+
+            {/* ------- labels ------- */}
+            <g
+              font-family="serif"
+              font-weight="bold"
+              fill="currentColor"
+              text-anchor="middle"
+            >
+              <text x="256" y="28" font-size="32">N</text>
+              <text x="256" y="546" font-size="32">S</text>
+              <text x="18" y="286" font-size="32">W</text>
+              <text x="494" y="286" font-size="32">E</text>
+
+              <text x="412" y="110" font-size="20">NE</text>
+              <text x="412" y="462" font-size="20">SE</text>
+              <text x="100" y="110" font-size="20">NW</text>
+              <text x="100" y="462" font-size="20">SW</text>
+            </g>
           </svg>
+
         </div>
-        <div className="absolute bottom-0 left-0 z-[-1] opacity-30 lg:opacity-100">
-          <svg
-            width="364"
-            height="201"
-            viewBox="0 0 364 201"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5.88928 72.3303C33.6599 66.4798 101.397 64.9086 150.178 105.427C211.155 156.076 229.59 162.093 264.333 166.607C299.076 171.12 337.718 183.657 362.889 212.24"
-              stroke="url(#paint0_linear_25:218)"
-            />
-            <path
-              d="M-22.1107 72.3303C5.65989 66.4798 73.3965 64.9086 122.178 105.427C183.155 156.076 201.59 162.093 236.333 166.607C271.076 171.12 309.718 183.657 334.889 212.24"
-              stroke="url(#paint1_linear_25:218)"
-            />
-            <path
-              d="M-53.1107 72.3303C-25.3401 66.4798 42.3965 64.9086 91.1783 105.427C152.155 156.076 170.59 162.093 205.333 166.607C240.076 171.12 278.718 183.657 303.889 212.24"
-              stroke="url(#paint2_linear_25:218)"
-            />
-            <path
-              d="M-98.1618 65.0889C-68.1416 60.0601 4.73364 60.4882 56.0734 102.431C120.248 154.86 139.905 161.419 177.137 166.956C214.37 172.493 255.575 186.165 281.856 215.481"
-              stroke="url(#paint3_linear_25:218)"
-            />
-            <circle
-              opacity="0.8"
-              cx="214.505"
-              cy="60.5054"
-              r="49.7205"
-              transform="rotate(-13.421 214.505 60.5054)"
-              stroke="url(#paint4_linear_25:218)"
-            />
-            <circle cx="220" cy="63" r="43" fill="url(#paint5_radial_25:218)" />
-            <defs>
-              <linearGradient
-                id="paint0_linear_25:218"
-                x1="184.389"
-                y1="69.2405"
-                x2="184.389"
-                y2="212.24"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" stopOpacity="0" />
-                <stop offset="1" stopColor="#4A6CF7" />
-              </linearGradient>
-              <linearGradient
-                id="paint1_linear_25:218"
-                x1="156.389"
-                y1="69.2405"
-                x2="156.389"
-                y2="212.24"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" stopOpacity="0" />
-                <stop offset="1" stopColor="#4A6CF7" />
-              </linearGradient>
-              <linearGradient
-                id="paint2_linear_25:218"
-                x1="125.389"
-                y1="69.2405"
-                x2="125.389"
-                y2="212.24"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" stopOpacity="0" />
-                <stop offset="1" stopColor="#4A6CF7" />
-              </linearGradient>
-              <linearGradient
-                id="paint3_linear_25:218"
-                x1="93.8507"
-                y1="67.2674"
-                x2="89.9278"
-                y2="210.214"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" stopOpacity="0" />
-                <stop offset="1" stopColor="#4A6CF7" />
-              </linearGradient>
-              <linearGradient
-                id="paint4_linear_25:218"
-                x1="214.505"
-                y1="10.2849"
-                x2="212.684"
-                y2="99.5816"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#4A6CF7" />
-                <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
-              </linearGradient>
-              <radialGradient
-                id="paint5_radial_25:218"
-                cx="0"
-                cy="0"
-                r="1"
-                gradientUnits="userSpaceOnUse"
-                gradientTransform="translate(220 63) rotate(90) scale(43)"
-              >
-                <stop offset="0.145833" stopColor="white" stopOpacity="0" />
-                <stop offset="1" stopColor="white" stopOpacity="0.08" />
-              </radialGradient>
-            </defs>
-          </svg>
-        </div> */}
-        <div className="absolute top-[100px] right-[10px] z-[-1] opacity-30 lg:opacity-100">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="150"
-            height="150"
-            viewBox="0 0 100 100"
-            fill="none"
-            stroke="#4A6CF7"
-            strokeWidth="2"
-          >
-            <circle cx="50" cy="50" r="45" />
-            <line x1="50" y1="5" x2="50" y2="95" />
-            <line x1="5" y1="50" x2="95" y2="50" />
-            <line x1="20" y1="20" x2="80" y2="80" />
-            <line x1="80" y1="20" x2="20" y2="80" />
-            <text x="50" y="15" textAnchor="middle" fontSize="6" fill="#4A6CF7">N</text>
-            <text x="50" y="98" textAnchor="middle" fontSize="6" fill="#4A6CF7">S</text>
-            <text x="5" y="54" fontSize="6" fill="#4A6CF7">W</text>
-            <text x="92" y="54" fontSize="6" fill="#4A6CF7">E</text>
-          </svg>
-        </div>
-        <div className="absolute bottom-4 left-[20px] z-[-1] opacity-30 lg:opacity-100">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="100"
-            height="100"
-            viewBox="0 0 64 64"
-            fill="none"
-            stroke="#4A6CF7"
-            strokeWidth="2"
-          >
-            <path d="M32 2v36m0 0c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8zm-8 0v10H10v4h44v-4H40V38m-8 0v20" />
-            <path d="M20 58l-6-6m30 6l6-6" />
-            <circle cx="32" cy="30" r="3" fill="#4A6CF7" />
-          </svg>
-        </div>
+
+
 
       </section>
     </>
