@@ -22,6 +22,7 @@ export default function Home() {
     <>
       <ScrollUp />
       <Hero />
+      <Blog />
       <Features />
       <Video />
       <Brands />
@@ -29,7 +30,6 @@ export default function Home() {
       <AboutSectionTwo />
       <Testimonials />
       <Pricing />
-      <Blog />
       <Contact />
     </>
   );
